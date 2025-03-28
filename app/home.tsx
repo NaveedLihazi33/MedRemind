@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
+  StyleSheet
   
 } from "react-native";
 import { useRef,useEffect } from "react";
@@ -85,16 +86,25 @@ function CircularProgress({
 
 export default function HomeScreen() {
   return (
-    <ScrollView>
-      <LinearGradient colors={["#1A8E2D", "#146922"]}>
-        <View>
-          <View>
-            <View>
-              <Text>Daily Progress</Text>
+    <ScrollView style={styles.container} >
+      <LinearGradient colors={["#1A8E2D", "#146922"]} style={styles.header}>
+        <View style={styles.headerContent}>
+          <View style={styles.headerTop}>
+            <View style={
+              {
+                flex:1
+              }
+            }>
+              <Text style={styles.greeting}>Daily Progress</Text>
             </View>
 
-            <TouchableOpacity>
-              <Ionicons name="notifications-outline" size={24} color="white" />
+            <TouchableOpacity style={styles.notificationButton}>
+              <Ionicons  name="notifications-outline" size={24} color="white" />
+              {<View style={styles.notificationBadge}>
+                <Text style={styles.notificationCount}>
+
+                </Text>
+                </View>}
             </TouchableOpacity>
           </View>
 
@@ -111,4 +121,93 @@ export default function HomeScreen() {
   );
 }
 
-
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:"#F8F9FA"
+  },
+  header:{
+    paddingTop:50,
+    paddingBottom:25,
+    borderBottomLeftRadius:30,
+    borderBottomRightRadius:30
+  },
+  headerContent:{
+    alignItems:"center",
+    paddingHorizontal:20
+  },
+  headerTop:{
+    flexDirection:"row",
+    alignItems:"center",
+    width:"100%",
+    marginBottom:20
+  },
+  greeting:{
+    fontSize:18,
+    fontWeight:600,
+    color:"white",
+    opacity:0.9
+  },
+  content:{
+    flex:1,
+    paddingTop:20
+  },
+  notificationButton:{
+    position:"relative",
+    padding:8,
+    backgroundColor:"rgba(2555,255,255,0.15)",
+    borderRadius:12,
+    marginLeft:8
+  },
+  notificationBadge:{
+    position:"absolute",
+    top:-4,
+    right:-4,
+    backgroundColor:"#FF5252",
+    borderRadius:100,
+    height:20,
+    justifyContent:"center",
+    alignItems:"center",
+    paddingHorizontal:4,
+    borderWidth:2,
+    borderColor:"#146922",
+    minWidth:20
+  },
+  notificationCount:{
+    fontSize:11,
+    fontWeight:"bold",
+    color:"white"
+  },
+  progressContainer:{
+    alignItems:"center",
+    justifyContent:"center",
+    marginVertical:10
+  },
+  progressTextContainer:{
+    position:"absolute",
+    zIndex:1,
+    alignItems:"center",
+    justifyContent:"center",
+    
+  },
+  progressPercentage:{
+    fontSize:36,
+    color:"white",
+    fontWeight:"bold"
+  },
+  progressLabel:{
+    fontSize:14,
+    color:"rgba(255,255,255,0.9)",
+    fontWeight:"bold"
+  },
+  progressDetails:{
+    fontSize:11,
+    color:"white",
+    fontWeight:"bold",
+  },
+  progressRing:{
+    transform:[{
+      rotate:"-90deg"
+    }]
+  }
+})
