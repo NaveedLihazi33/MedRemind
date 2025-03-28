@@ -48,16 +48,16 @@ function CircularProgress({
   });
 
   return (
-    <View>
-      <View>
-        <Text>
+    <View style={styles.progressContainer}>
+      <View style={styles.progressTextContainer}>
+        <Text style={styles.progressPercentage}>
           {Math.round(progress)}%
         </Text>
-        <Text>
+        <Text style={styles.progressLabel}>
           {completedDoses} of {totalDoses} Doses
         </Text>
       </View>
-      <Svg width={size} height={size}>
+      <Svg width={size} height={size} style={styles.progressRing}>
         <Circle
         cx={size/2}
         cy={size/2}
@@ -117,6 +117,9 @@ export default function HomeScreen() {
           />
         </View>
       </LinearGradient>
+
+
+      
     </ScrollView>
   );
 }
