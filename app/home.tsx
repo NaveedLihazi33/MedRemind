@@ -12,11 +12,42 @@ import {
 } from "react-native";
 import { useRef,useEffect } from "react";
 import { Svg,Circle } from "react-native-svg";
-
-
-
+import { Link,useRouter } from "expo-router";
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const { width } = Dimensions.get("window");
+
+
+const QUICK_ACTIONS = [
+  {
+    icon:"add-circle-outline" as const,
+    label:"Add\nMedications",
+    route:'/medications/add' as const,
+    color:"#2E7D32",
+    gradient:["#4CAF50","#2E7D32"] as [string,string]
+  },
+  {
+    icon:"calender-outline" as const,
+    label:"Calender\nView",
+    route:'/calender' as const,
+    color:"#1976D2",
+    gradient:["#2196F3","#1976D2"] as [string,string]
+  },
+  {
+    icon:"time-outline" as const,
+    label:"History\nLog",
+    route:'/history' as const,
+    color:"#C2185B",
+    gradient:["#E91E63","#C2185B"] as [string,string]
+  },
+  {
+    icon:"medical-outline" as const,
+    label:"Refill\nTracker",
+    route:'/refills' as const,
+    color:"#E64A19",
+    gradient:["#FF5722","#E64A19"] as [string,string]
+  }
+];
+
 interface CircularProgressProps {
   progress: number;
   totalDoses: number;
@@ -85,6 +116,7 @@ function CircularProgress({
 }
 
 export default function HomeScreen() {
+  const route = useRouter();
   return (
     <ScrollView style={styles.container} >
       <LinearGradient colors={["#1A8E2D", "#146922"]} style={styles.header}>
@@ -117,6 +149,30 @@ export default function HomeScreen() {
           />
         </View>
       </LinearGradient>
+
+      <View style={styles.content}>
+        <View>
+          <Text>
+            Quick Actions
+          </Text>
+          <View>
+            {QUICK_ACTIONS.map((actions)=>(
+              <Link href={actions.route} key={actions.label} asChild>
+                <TouchableOpacity>
+                  <LinearGradient colors={actions.gradient} >
+                    <View>
+                      <Ionicons name={actions.icon} size={24} color="white"/>
+                    </View>
+                    <Text>
+                      {actions.label}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </Link>
+            ))}
+          </View>
+        </View>
+      </View>
 
 
       
@@ -212,5 +268,39 @@ const styles = StyleSheet.create({
     transform:[{
       rotate:"-90deg"
     }]
+  },
+  quickActionsContainer:{
+    paddingHorizontal:20,
+    marginBottom:25,
+  },
+  quickActionsGrid:{
+    flexDirection:"row",
+    flexWrap:"wrap",
+    gap:12,
+    marginTop:15
+  },
+  actionButton:{
+    width:(width - 52) / 2,
+    height:110,
+    borderRadius:16,
+    overflow:"hidden"
+  },
+  actionGradient:{
+    flex:1,
+    padding:15
+  },
+  actionIcon:{
+    width:40,
+    height:40,
+    borderRadius:12,
+    backgroundColor:"rgba(255,255,255,0.2)",
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  actionLabel:{
+    fontSize:14,
+    color:"white",
+    fontWeight:600,
+    marginTop:8
   }
 })
